@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private float speed = 5f;
     private Vector3 direction = Vector3.up;
 
+
     private void Start()
     {
         isMoving = true;
