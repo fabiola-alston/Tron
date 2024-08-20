@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class GridMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
     private bool isMoving;
     private Vector3 originPos, targetPos;
-    private float speed = 500f;
+    private float speed = 5f;
     private Vector3 direction = Vector3.up;
 
     private void Start()
@@ -26,7 +26,7 @@ public class GridMovement : MonoBehaviour
             direction = Vector3.left;
 
             Quaternion target = Quaternion.Euler(0, 0, 90);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
         }
 
         if (Input.GetKey(KeyCode.RightArrow) && isMoving)
@@ -34,7 +34,7 @@ public class GridMovement : MonoBehaviour
             direction = Vector3.right;
 
             Quaternion target = Quaternion.Euler(0, 0, -90);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
         }
 
         if (Input.GetKey(KeyCode.DownArrow) && isMoving)
@@ -42,7 +42,7 @@ public class GridMovement : MonoBehaviour
             direction = Vector3.down;
 
             Quaternion target = Quaternion.Euler(0, 0, -180);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
         }
 
         if (Input.GetKey(KeyCode.UpArrow) && isMoving)
@@ -50,7 +50,7 @@ public class GridMovement : MonoBehaviour
             direction = Vector3.up;
 
             Quaternion target = Quaternion.Euler(0, 0, 0);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
         }
 
     }
@@ -64,14 +64,14 @@ public class GridMovement : MonoBehaviour
 
         while (elapsedTime < speed)
         {
-            transform.position = Vector3.Lerp(originPos, targetPos, (elapsedTime / speed));
-            elapsedTime += Time.deltaTime;
+            transform.position = Vector3.Lerp(originPos, targetPos, elapsedTime);
+            elapsedTime = speed * Time.deltaTime;
             yield return null;
         }
 
         transform.position = targetPos;
 
-        yield return new WaitForSeconds(1);
+        // yield return new WaitForSeconds(1);
 
     }
 }
