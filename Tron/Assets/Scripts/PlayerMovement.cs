@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class PlayerMovement : MonoBehaviour
@@ -11,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
     private float speed = 5f;
     private Vector3 direction = Vector3.up;
 
+    [SerializeField]
+    private Vector3 playerPos; 
+
 
     private void Start()
     {
@@ -19,7 +23,21 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        StartCoroutine(Move(direction));
+        if (isMoving)
+        {
+            StartCoroutine(Move(direction));
+        }
+        
+
+        playerPos = transform.position;
+
+        playerPos = playerPos * 100;
+
+        if ((playerPos.x < -460|| playerPos.x > 460) || (playerPos.y < -460 || playerPos.y > 460))
+        {
+            isMoving = false;
+            StopCoroutine(Move(direction));
+        }
 
 
         if (Input.GetKey(KeyCode.LeftArrow) && isMoving)

@@ -158,7 +158,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 700, y: 700}
+  m_SizeDelta: {x: 1000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &407958355
 MonoBehaviour:
@@ -412,11 +412,11 @@ Transform:
   m_GameObject: {fileID: 838436171}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.5, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 0, y: -480, z: -1}
+  m_LocalScale: {x: 20, y: 20, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 960448865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &838436174
 MonoBehaviour:
@@ -430,10 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0713750f20481284a8bab14baefd7805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -4.4
-  maxX: 4.4
-  minY: -4.4
-  maxY: 4.4
+  playerPos: {x: 0, y: 0, z: 0}
 --- !u!114 &838436176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -647,6 +644,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 407958354}
+  - {fileID: 838436173}
+  - {fileID: 1983925898}
+  - {fileID: 2001718559}
+  - {fileID: 1874207100}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -732,9 +733,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1874207100}
   - component: {fileID: 1874207099}
+  - component: {fileID: 1874207103}
   - component: {fileID: 1874207102}
   - component: {fileID: 1874207101}
-  - component: {fileID: 1874207103}
   m_Layer: 0
   m_Name: yellow car
   m_TagString: Untagged
@@ -802,12 +803,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874207098}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 2, y: 4.5, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalPosition: {x: 150, y: 480, z: -6695.9995}
+  m_LocalScale: {x: 20, y: 20, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 960448865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &1874207101
 MonoBehaviour:
@@ -949,9 +950,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1983925898}
   - component: {fileID: 1983925897}
+  - component: {fileID: 1983925901}
   - component: {fileID: 1983925900}
   - component: {fileID: 1983925899}
-  - component: {fileID: 1983925901}
   m_Layer: 0
   m_Name: pink car
   m_TagString: Untagged
@@ -1019,12 +1020,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1983925896}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 4.5, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 480, z: -6695.9995}
+  m_LocalScale: {x: 20, y: 20, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 960448865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &1983925899
 MonoBehaviour:
@@ -1166,9 +1167,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2001718559}
   - component: {fileID: 2001718558}
+  - component: {fileID: 2001718562}
   - component: {fileID: 2001718561}
   - component: {fileID: 2001718560}
-  - component: {fileID: 2001718562}
   m_Layer: 0
   m_Name: green car
   m_TagString: Untagged
@@ -1236,12 +1237,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001718557}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: -2, y: 4.5, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalPosition: {x: -150, y: 480, z: -6695.9995}
+  m_LocalScale: {x: 20, y: 20, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 960448865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &2001718560
 MonoBehaviour:
@@ -1378,9 +1379,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 838436173}
-  - {fileID: 1983925898}
-  - {fileID: 2001718559}
-  - {fileID: 1874207100}
   - {fileID: 1848111350}
   - {fileID: 960448865}

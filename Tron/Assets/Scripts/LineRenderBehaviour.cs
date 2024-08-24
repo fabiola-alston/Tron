@@ -15,6 +15,7 @@ public class LineRenderBehaviour : MonoBehaviour
     [SerializeField]
     private float width = 1f;
 
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
