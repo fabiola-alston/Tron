@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerPos = playerPos * 100;
 
-        if ((playerPos.x < -460|| playerPos.x > 460) || (playerPos.y < -460 || playerPos.y > 460))
+        if ((playerPos.x < -430|| playerPos.x > 430) || (playerPos.y < -420 || playerPos.y > 420))
         {
             isMoving = false;
             StopCoroutine(Move(direction));
