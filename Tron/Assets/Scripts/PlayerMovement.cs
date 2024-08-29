@@ -7,14 +7,6 @@ using static UnityEngine.GraphicsBuffer;
 public class PlayerMovement : MonoBehaviour
 {
 
-    /*private bool isMoving;
-    private Vector3 originPos, targetPos;
-    private float speed = 5f;
-    private Vector3 direction = Vector3.up;
-
-    [SerializeField]
-    private Vector3 playerPos; */
-
     private float moveX;
     private float moveY;
     private float rotateAngle;
@@ -34,53 +26,59 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            //moveX = 0f;
-            //moveY = 0.25f;
+            moveX = 0f;
+            moveY = 0.25f;
             rotateAngle = 0f;
 
-            moveAmount = new Vector3(moveX, moveY, 0f);
-            transform.Translate(moveAmount);
-            transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
+            Move();
 
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            //moveX = 0f;
-            //moveY = -0.25f;
+            moveX = 0f;
+            moveY = -0.25f;
             rotateAngle = 180f;
 
-            moveAmount = new Vector3(moveX, moveY, 0f);
-            transform.Translate(moveAmount);
-            transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
+            Move();
 
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            //moveX = -0.25f;
-            //moveY = 0f;
+            moveX = -0.25f;
+            moveY = 0f;
             rotateAngle = 90f;
 
-            moveAmount = new Vector3(moveX, moveY, 0f);
-            transform.Translate(moveAmount);
-            transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
+            Move();
 
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            //moveX = 0.25f;
-            //moveY = 0f;
+            moveX = 0.25f;
+            moveY = 0f;
             rotateAngle = -90f;
 
-            moveAmount = new Vector3(moveX, moveY, 0f);
-            transform.Translate(moveAmount);
-            transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
+            Move();
 
         }
 
 
+    }
+
+    private void Move()
+    {
+        Vector3 currentPos = transform.position;
+        
+
+        moveAmount = new Vector3(moveX, moveY, 0f);
+        Vector3 updatePos = currentPos + moveAmount;
+
+        // transform.Translate(moveAmount);
+        transform.position = updatePos;
+
+        transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
     }
     
     /*private IEnumerator Move(Vector3 direction)
