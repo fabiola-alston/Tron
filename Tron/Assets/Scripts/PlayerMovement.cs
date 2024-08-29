@@ -7,74 +7,83 @@ using static UnityEngine.GraphicsBuffer;
 public class PlayerMovement : MonoBehaviour
 {
 
-    private bool isMoving;
+    /*private bool isMoving;
     private Vector3 originPos, targetPos;
     private float speed = 5f;
     private Vector3 direction = Vector3.up;
 
     [SerializeField]
-    private Vector3 playerPos; 
+    private Vector3 playerPos; */
+
+    private float moveX;
+    private float moveY;
+    private float rotateAngle;
+    private Vector3 moveAmount;
 
 
     private void Start()
     {
-        isMoving = true;
+        //isMoving = true;
+        moveX = 0f;
+        moveY = 0.25f;
+        rotateAngle = 0f;
     }
 
     void Update()
     {
-        if (isMoving)
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            StartCoroutine(Move(direction));
-        }
-        
+            //moveX = 0f;
+            //moveY = 0.25f;
+            rotateAngle = 0f;
 
-        playerPos = transform.position;
+            moveAmount = new Vector3(moveX, moveY, 0f);
+            transform.Translate(moveAmount);
+            transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
 
-        playerPos = playerPos * 100;
-
-        if ((playerPos.x < -430|| playerPos.x > 430) || (playerPos.y < -420 || playerPos.y > 420))
-        {
-            isMoving = false;
-            StopCoroutine(Move(direction));
         }
 
-
-        if (Input.GetKey(KeyCode.LeftArrow) && isMoving)
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            direction = Vector3.left;
+            //moveX = 0f;
+            //moveY = -0.25f;
+            rotateAngle = 180f;
 
-            Quaternion target = Quaternion.Euler(0, 0, 90);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
+            moveAmount = new Vector3(moveX, moveY, 0f);
+            transform.Translate(moveAmount);
+            transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
+
         }
 
-        if (Input.GetKey(KeyCode.RightArrow) && isMoving)
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            direction = Vector3.right;
+            //moveX = -0.25f;
+            //moveY = 0f;
+            rotateAngle = 90f;
 
-            Quaternion target = Quaternion.Euler(0, 0, -90);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
+            moveAmount = new Vector3(moveX, moveY, 0f);
+            transform.Translate(moveAmount);
+            transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
+
         }
 
-        if (Input.GetKey(KeyCode.DownArrow) && isMoving)
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            direction = Vector3.down;
+            //moveX = 0.25f;
+            //moveY = 0f;
+            rotateAngle = -90f;
 
-            Quaternion target = Quaternion.Euler(0, 0, -180);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
+            moveAmount = new Vector3(moveX, moveY, 0f);
+            transform.Translate(moveAmount);
+            transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
+
         }
 
-        if (Input.GetKey(KeyCode.UpArrow) && isMoving)
-        {
-            direction = Vector3.up;
-
-            Quaternion target = Quaternion.Euler(0, 0, 0);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
-        }
 
     }
     
-    private IEnumerator Move(Vector3 direction)
+    /*private IEnumerator Move(Vector3 direction)
     {
         float elapsedTime = 0;
 
@@ -92,5 +101,5 @@ public class PlayerMovement : MonoBehaviour
 
         // yield return new WaitForSeconds(1);
 
-    }
+    }*/
 }
