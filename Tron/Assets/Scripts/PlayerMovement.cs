@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,98 +7,105 @@ using static UnityEngine.GraphicsBuffer;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     private float moveX;
     private float moveY;
     private float rotateAngle;
-    private Vector3 moveAmount;
+    private bool isMoving;
+    public float speed = 1f;
+    private float unit = 0.25f; // standard is 0.25f
+    private float subUnit = 0.25f; // standard at speed 1
+    public float subUnitsTraveled;
 
+    public Vector3 moveAmount;
 
     private void Start()
     {
-        //isMoving = true;
+        isMoving = true;
+        subUnit = unit * speed;
+
         moveX = 0f;
-        moveY = 0.25f;
+        moveY = subUnit;
         rotateAngle = 0f;
+        
+
     }
 
     void Update()
     {
+        Vector3 position = transform.position;
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (isMoving)
         {
-            moveX = 0f;
-            moveY = 0.25f;
-            rotateAngle = 0f;
+            StartCoroutine(ConstantMove());
 
-            Move();
+        }
+        
+
+        if ((position.x >= 10 || position.x <= -10) || (position.y >= 5 || position.y <= -5))
+        {
+            Death();
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow) && isMoving)
+        {
+            SetDirection(0f, subUnit, 0f);
 
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow) && isMoving)
         {
-            moveX = 0f;
-            moveY = -0.25f;
-            rotateAngle = 180f;
-
-            Move();
+            SetDirection(0f, -subUnit, 180f);
 
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && isMoving)
         {
-            moveX = -0.25f;
-            moveY = 0f;
-            rotateAngle = 90f;
-
-            Move();
+            SetDirection(-subUnit, 0f, 90f);
 
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) && isMoving)
         {
-            moveX = 0.25f;
-            moveY = 0f;
-            rotateAngle = -90f;
-
-            Move();
+            SetDirection(subUnit, 0f, -90f);
 
         }
 
 
     }
 
-    private void Move()
+    private void SetDirection(float dirX, float dirY, float angle)
+    {
+        StopCoroutine(ConstantMove());
+        moveX = dirX;
+        moveY = dirY;
+        rotateAngle = angle;
+        transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
+
+        StartCoroutine(ConstantMove());
+    }
+
+    private IEnumerator ConstantMove()
     {
         Vector3 currentPos = transform.position;
-        
-
         moveAmount = new Vector3(moveX, moveY, 0f);
         Vector3 updatePos = currentPos + moveAmount;
 
-        // transform.Translate(moveAmount);
-        transform.position = updatePos;
+        subUnitsTraveled = 0f;
 
-        transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
-    }
-    
-    /*private IEnumerator Move(Vector3 direction)
-    {
-        float elapsedTime = 0;
-
-        originPos = transform.position;
-        targetPos = originPos + direction;
-
-        while (elapsedTime < speed)
+        while (subUnitsTraveled < unit)
         {
-            transform.position = Vector3.Lerp(originPos, targetPos, elapsedTime);
-            elapsedTime = speed * Time.deltaTime;
+            transform.position = updatePos;
+            subUnitsTraveled += subUnit * Time.deltaTime;
+
             yield return null;
         }
 
-        transform.position = targetPos;
+    }
 
-        // yield return new WaitForSeconds(1);
+    private void Death()
+    {
+        isMoving = false;
+    }
 
-    }*/
+
 }
