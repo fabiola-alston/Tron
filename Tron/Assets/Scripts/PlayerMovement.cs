@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private float unit = 0.25f; // standard is 0.25f
     private float subUnit = 0.25f; // standard at speed 1
     public float subUnitsTraveled;
+    private Coroutine currentCoroutine;
 
     public Vector3 moveAmount;
 
@@ -32,8 +33,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isMoving)
         {
-            StartCoroutine(ConstantMove());
+            // Ensure we are not starting multiple coroutines
+            if (currentCoroutine == null)
+            {
+                currentCoroutine = StartCoroutine(ConstantMove());
+            }
         }
+        else if (currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+            currentCoroutine = null;
+        }
+
 
         Vector3 position = transform.position;
 
@@ -71,12 +82,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetDirection(float dirX, float dirY, float angle)
     {
-        StopCoroutine(ConstantMove());
         moveX = dirX;
         moveY = dirY;
         rotateAngle = angle;
         transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
         moveAmount = new Vector3(moveX, moveY, 0f);
+
+        if (currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+            currentCoroutine = StartCoroutine(ConstantMove());
+        }
 
     }
 
@@ -95,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         
+        currentCoroutine = null;
     }
 
     private void Death()
