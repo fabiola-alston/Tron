@@ -26,20 +26,16 @@ public class PlayerMovement : MonoBehaviour
         moveX = 0f;
         moveY = subUnit;
         rotateAngle = 0f;
-        
-
     }
 
     void Update()
     {
-        Vector3 position = transform.position;
-
         if (isMoving)
         {
             StartCoroutine(ConstantMove());
-
         }
-        
+
+        Vector3 position = transform.position;
 
         if ((position.x >= 10 || position.x <= -10) || (position.y >= 5 || position.y <= -5))
         {
@@ -70,8 +66,8 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-
     }
+
 
     private void SetDirection(float dirX, float dirY, float angle)
     {
@@ -80,14 +76,14 @@ public class PlayerMovement : MonoBehaviour
         moveY = dirY;
         rotateAngle = angle;
         transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
+        moveAmount = new Vector3(moveX, moveY, 0f);
 
-        StartCoroutine(ConstantMove());
     }
 
     private IEnumerator ConstantMove()
     {
         Vector3 currentPos = transform.position;
-        moveAmount = new Vector3(moveX, moveY, 0f);
+    
         Vector3 updatePos = currentPos + moveAmount;
 
         subUnitsTraveled = 0f;
@@ -95,11 +91,10 @@ public class PlayerMovement : MonoBehaviour
         while (subUnitsTraveled < unit)
         {
             transform.position = updatePos;
-            subUnitsTraveled += subUnit * Time.deltaTime;
-
+            subUnitsTraveled += Time.deltaTime;
             yield return null;
         }
-
+        
     }
 
     private void Death()
