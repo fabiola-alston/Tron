@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
+using LinkedListNS;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private float subUnit = 0.25f; // standard at speed 1
     public float subUnitsTraveled;
     private Coroutine currentCoroutine;
+    public static ILinkedList<Vector3> playerPositions = new SinglyLinkedList<Vector3>();
+
 
     public Vector3 moveAmount;
 
@@ -27,10 +31,23 @@ public class PlayerMovement : MonoBehaviour
         moveX = 0f;
         moveY = subUnit;
         rotateAngle = 0f;
+
+        Vector3 playerPos = transform.position;
+        Vector3 lastPlayerPos = playerPos;
+
+        for (int i = 0; i == 3; i++)
+        {
+            lastPlayerPos = new Vector3(lastPlayerPos.x - moveX, lastPlayerPos.y - moveY, 0f);
+            playerPositions.AddLast(lastPlayerPos);
+
+        }
+
     }
 
     void Update()
     {
+        subUnit = unit * speed;
+
         if (isMoving)
         {
             // Ensure we are not starting multiple coroutines
@@ -77,6 +94,21 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            speed = 1f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            speed = 2f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            speed = 3f;
+        }
+
     }
 
 
@@ -111,6 +143,16 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         
+        Vector3 playerPos = transform.position;
+
+        playerPositions.AddLast(playerPos);
+        playerPositions.RemoveFirst();
+
+        Debug.Log("X:" + playerPos.x + "Y: " + playerPos.y);
+
+        playerPositions.Print();
+
+
         currentCoroutine = null;
     }
 
