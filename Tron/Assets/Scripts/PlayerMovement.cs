@@ -10,7 +10,7 @@ using LinkedListNS;
 public class PlayerMovement : MonoBehaviour
 {
     private float moveX;
-    private float moveY;
+    private static float moveY;
     private float rotateAngle;
     private bool isMoving;
     public float speed = 1f;
@@ -18,7 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private float subUnit = 0.25f; // standard at speed 1
     public float subUnitsTraveled;
     private Coroutine currentCoroutine;
-    public static ILinkedList<Vector3> playerPositions = new SinglyLinkedList<Vector3>();
+    
+    // public static ILinkedList<Vector3> playerPositions = new SinglyLinkedList<Vector3>();
 
 
     public Vector3 moveAmount;
@@ -32,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         moveY = subUnit;
         rotateAngle = 0f;
 
-        Vector3 playerPos = transform.position;
+        /*Vector3 playerPos = transform.position;
         Vector3 lastPlayerPos = playerPos;
 
         for (int i = 0; i == 3; i++)
@@ -40,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
             lastPlayerPos = new Vector3(lastPlayerPos.x - moveX, lastPlayerPos.y - moveY, 0f);
             playerPositions.AddLast(lastPlayerPos);
 
-        }
+        }*/
 
     }
 
@@ -145,12 +146,10 @@ public class PlayerMovement : MonoBehaviour
         
         Vector3 playerPos = transform.position;
 
-        playerPositions.AddLast(playerPos);
-        playerPositions.RemoveFirst();
+        // playerPositions.AddFirst(playerPos);
+        // playerPositions.RemoveLast();
 
         Debug.Log("X:" + playerPos.x + "Y: " + playerPos.y);
-
-        playerPositions.Print();
 
 
         currentCoroutine = null;
