@@ -1,48 +1,72 @@
+using LinkedListNS;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CPUMovement : MonoBehaviour
 {
-    //private bool isMoving;
-    private Vector3 originPos, targetPos;
-    private float speed = 3f;
-    private Vector3 direction = Vector3.down;
-    private Quaternion target = Quaternion.Euler(0, 0, 90);
-
+    private float moveX;
+    private static float moveY;
+    private float rotateAngle;
+    private bool isMoving;
+    public float speed = 1f;
+    private float unit = 0.25f; // standard is 0.25f
+    private float subUnit = 0.25f; // standard at speed 1
+    public float subUnitsTraveled;
+    private Coroutine currentCoroutine;
+    public Vector3 moveAmount;
+    private SinglyLinkedList<Vector3> globalPositions;
 
     void Start()
     {
-        // isMoving = true;
+        isMoving = true;
+        subUnit = unit * speed;
+
+        globalPositions = TailRenderScript.globalPositions;
+
+        moveX = 0f;
+        moveY = -subUnit;
+        rotateAngle = 0f;
+
         StartCoroutine(Clock());
 
     }
 
     void Update()
     {
-        StartCoroutine(Move(direction));
+        subUnit = unit * speed;
 
-    }
-
-    private IEnumerator Move(Vector3 direction)
-    {
-        float elapsedTime = 0;
-
-        originPos = transform.position;
-        targetPos = originPos + direction;
-
-        while (elapsedTime < speed)
+        if (isMoving)
         {
-            transform.position = Vector3.Lerp(originPos, targetPos, elapsedTime);
-            elapsedTime = speed * Time.deltaTime;
-            yield return null;
+            // Ensure we are not starting multiple coroutines
+            if (currentCoroutine == null)
+            {
+                currentCoroutine = StartCoroutine(ConstantMove());
+            }
+        }
+        else if (currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+            currentCoroutine = null;
         }
 
-        transform.position = targetPos;
 
-        // yield return new WaitForSeconds(1);
+        Vector3 position = transform.position;
 
+        if ((position.x >= 10 || position.x <= -10) || (position.y >= 5 || position.y <= -5))
+        {
+            Death();
+        }
+
+        for (int i = 0; i < globalPositions.Length(); i++)
+        {
+            if (transform.position == globalPositions.Index(i))
+            {
+                Death();
+            }
+        }
     }
+
 
     private IEnumerator Clock()
     {
@@ -55,35 +79,74 @@ public class CPUMovement : MonoBehaviour
         
     }
 
+    private IEnumerator ConstantMove()
+    {
+        Vector3 currentPos = transform.position;
+
+        Vector3 updatePos = currentPos + moveAmount;
+
+        subUnitsTraveled = 0f;
+
+        while (subUnitsTraveled < unit)
+        {
+            transform.position = updatePos;
+            subUnitsTraveled += Time.deltaTime;
+            yield return null;
+        }
+
+        Vector3 playerPos = transform.position;
+
+
+        currentCoroutine = null;
+    }
+
+    private void Death()
+    {
+        isMoving = false;
+    }
+
+    private void SetDirection(float dirX, float dirY, float angle)
+    {
+        moveX = dirX;
+        moveY = dirY;
+        rotateAngle = angle;
+        transform.eulerAngles = new Vector3(0f, 0f, rotateAngle);
+        moveAmount = new Vector3(moveX, moveY, 0f);
+
+        if (currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+            currentCoroutine = StartCoroutine(ConstantMove());
+        }
+
+    }
+
     private void RandomTurn()
     {
         int randomChoice = Random.Range(0, 4);
 
-        switch (randomChoice)
+        if (isMoving)
         {
-            case 0:
-                direction = Vector3.up;
-                target = Quaternion.Euler(0, 0, 0);
-                transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
-                break;
+            switch (randomChoice)
+            {
+                case 0:
+                    SetDirection(0f, subUnit, 0f);
+                    break;
 
-            case 1:
-                direction = Vector3.left;
-                target = Quaternion.Euler(0, 0, 90);
-                transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
-                break;
+                case 1:
+                    SetDirection(0f, -subUnit, 180f);
+                    break;
 
-            case 2:
-                direction = Vector3.right;
-                target = Quaternion.Euler(0, 0, -90);
-                transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
-                break;
+                case 2:
+                    SetDirection(-subUnit, 0f, 90f);
+                    break;
 
-            case 03:
-                direction = Vector3.down;
-                target = Quaternion.Euler(0, 0, -180);
-                transform.rotation = Quaternion.Slerp(transform.rotation, target, speed);
-                break;
+                case 3:
+                    SetDirection(subUnit, 0f, -90f);
+                    break;
+
+            }
         }
+        
     }
 }

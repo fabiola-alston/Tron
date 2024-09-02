@@ -18,9 +18,10 @@ public class PlayerMovement : MonoBehaviour
     private float subUnit = 0.25f; // standard at speed 1
     public float subUnitsTraveled;
     private Coroutine currentCoroutine;
+
+    private SinglyLinkedList<Vector3> globalPositions;
     
     // public static ILinkedList<Vector3> playerPositions = new SinglyLinkedList<Vector3>();
-
 
     public Vector3 moveAmount;
 
@@ -28,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     {
         isMoving = true;
         subUnit = unit * speed;
+
+        globalPositions = TailRenderScript.globalPositions;
 
         moveX = 0f;
         moveY = subUnit;
@@ -69,6 +72,14 @@ public class PlayerMovement : MonoBehaviour
         if ((position.x >= 10 || position.x <= -10) || (position.y >= 5 || position.y <= -5))
         {
             Death();
+        }
+
+        for (int i = 0; i < globalPositions.Length(); i++)
+        {
+            if (transform.position == globalPositions.Index(i))
+            {
+                Death();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow) && isMoving)

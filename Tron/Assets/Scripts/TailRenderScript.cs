@@ -31,6 +31,7 @@ public class TailRenderScript : MonoBehaviour
         Vector3 lastPlayerPos = playerPos;
 
         positions.AddFirst(playerPos);
+        globalPositions.AddFirst(new Vector3());
 
         for (int i = 0; i < trailLength; i++)
         {
@@ -40,6 +41,9 @@ public class TailRenderScript : MonoBehaviour
             trailSquares.AddLast(trailSquare);
 
             Debug.Log(positions.Length());
+
+            // global positions add
+            globalPositions.AddLast(lastPlayerPos);
 
         }
     }
@@ -82,11 +86,14 @@ public class TailRenderScript : MonoBehaviour
     {
 
         Vector3 playerPos = transform.position;
+        Vector3 lastPlayerPos = new Vector3(playerPos.x - moveX, playerPos.y - moveY, playerPos.z);
 
         positions.AddFirst(playerPos);
         positions.RemoveLast();
 
-        Debug.Log("0: " + positions.Index(0) + "1: " + positions.Index(1) + "2: " + positions.Index(2) + "3: " + positions.Index(3));
+        // global positions
+        globalPositions.AddFirst(lastPlayerPos);
+        globalPositions.RemoveLast();
 
         GameObject trailSquare = Instantiate(tilePrefab, playerPos, Quaternion.identity);
         trailSquares.AddFirst(trailSquare);
