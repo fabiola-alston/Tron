@@ -49,8 +49,17 @@ namespace LinkedListNS
             if (first == null)
             {
                 first = new Node<Type>();
+                first.value = value;
             }
-            first.value = value;
+            else
+            {
+                Node<Type> new_first = new Node<Type>();
+                new_first.value = value;
+                new_first.next = first;
+
+                first = new_first;
+            }
+
 
         }
 
@@ -165,6 +174,41 @@ namespace LinkedListNS
                 previous.next = current.next;
 
             }
+        }
+
+        public Type Index(int index)
+        {
+
+            if (first == null)
+            {
+                throw new Exception("Tried referencing index, list is empty.");
+            }
+            else
+            {
+                current = first;
+
+                for (int i = 0; i < index; i++)
+                {
+                    current = current.next;
+                }
+            }
+
+            return current.value;
+        }
+
+        public int Length()
+        {
+            int length = 0;
+
+            current = first;
+
+            while (current != null)
+            {
+                current = current.next;
+                length++;
+            }
+
+            return length;
         }
 
     }

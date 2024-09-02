@@ -149,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
         // playerPositions.AddFirst(playerPos);
         // playerPositions.RemoveLast();
 
-        Debug.Log("X:" + playerPos.x + "Y: " + playerPos.y);
+        // Debug.Log("X:" + playerPos.x + "Y: " + playerPos.y);
 
 
         currentCoroutine = null;
