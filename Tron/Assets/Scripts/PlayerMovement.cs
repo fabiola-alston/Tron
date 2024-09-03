@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private Coroutine currentCoroutine;
 
     private SinglyLinkedList<Vector3> globalPositions;
-    
+
     // public static ILinkedList<Vector3> playerPositions = new SinglyLinkedList<Vector3>();
 
     public Vector3 moveAmount;
@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
         isMoving = true;
         subUnit = unit * speed;
 
-        globalPositions = TailRenderScript.globalPositions;
+        globalPositions = GlobalPositionsScript.globalPositions;
 
         moveX = 0f;
         moveY = subUnit;
@@ -169,6 +169,7 @@ public class PlayerMovement : MonoBehaviour
     private void Death()
     {
         isMoving = false;
+        Destroy(gameObject, 1f);
     }
 
 

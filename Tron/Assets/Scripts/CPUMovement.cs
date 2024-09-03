@@ -22,7 +22,7 @@ public class CPUMovement : MonoBehaviour
         isMoving = true;
         subUnit = unit * speed;
 
-        globalPositions = TailRenderScript.globalPositions;
+        globalPositions = GlobalPositionsScript.globalPositions;
 
         moveX = 0f;
         moveY = -subUnit;
@@ -55,7 +55,7 @@ public class CPUMovement : MonoBehaviour
 
         if ((position.x >= 10 || position.x <= -10) || (position.y >= 5 || position.y <= -5))
         {
-            Death();
+            RandomTurn();
         }
 
         for (int i = 0; i < globalPositions.Length(); i++)
