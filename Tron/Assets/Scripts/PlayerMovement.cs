@@ -13,21 +13,26 @@ public class PlayerMovement : MonoBehaviour
     private static float moveY;
     private float rotateAngle;
     private bool isMoving;
-    public float speed = 1f;
+    private Coroutine currentCoroutine;
     private float unit = 0.25f; // standard is 0.25f
     private float subUnit = 0.25f; // standard at speed 1
-    public float subUnitsTraveled;
-    private Coroutine currentCoroutine;
+    private float subUnitsTraveled;
 
     private SinglyLinkedList<Vector3> globalPositions;
 
-    // public static ILinkedList<Vector3> playerPositions = new SinglyLinkedList<Vector3>();
 
+    public float speed = 1f;
     public Vector3 moveAmount;
+
+    private TailRenderScript tailRenderer;
+    
 
     private void Start()
     {
+        // starts game off
         isMoving = true;
+
+        // sets subUnits (how many units will be traveled at a certain speed amount)
         subUnit = unit * speed;
 
         globalPositions = GlobalPositionsScript.globalPositions;
@@ -36,25 +41,18 @@ public class PlayerMovement : MonoBehaviour
         moveY = subUnit;
         rotateAngle = 0f;
 
-        /*Vector3 playerPos = transform.position;
-        Vector3 lastPlayerPos = playerPos;
-
-        for (int i = 0; i == 3; i++)
-        {
-            lastPlayerPos = new Vector3(lastPlayerPos.x - moveX, lastPlayerPos.y - moveY, 0f);
-            playerPositions.AddLast(lastPlayerPos);
-
-        }*/
+        tailRenderer = gameObject.GetComponent<TailRenderScript>();
 
     }
 
     void Update()
     {
+        // constantly update current speed
         subUnit = unit * speed;
 
+        // this starts the coroutine, and only starts another one once the last one is complete
         if (isMoving)
         {
-            // Ensure we are not starting multiple coroutines
             if (currentCoroutine == null)
             {
                 currentCoroutine = StartCoroutine(ConstantMove());
@@ -66,14 +64,16 @@ public class PlayerMovement : MonoBehaviour
             currentCoroutine = null;
         }
 
-
+        // positions is always updated with current car position
         Vector3 position = transform.position;
 
+        // dies if car hits an edge
         if ((position.x >= 10 || position.x <= -10) || (position.y >= 5 || position.y <= -5))
         {
             Death();
         }
 
+        // dies if car hits a grid position that is occupied by another player
         for (int i = 0; i < globalPositions.Length(); i++)
         {
             if (transform.position == globalPositions.Index(i))
@@ -169,7 +169,9 @@ public class PlayerMovement : MonoBehaviour
     private void Death()
     {
         isMoving = false;
-        Destroy(gameObject, 1f);
+        Vector3 playerPos = transform.position;
+        tailRenderer.DestroyTail();
+        Destroy(gameObject, 0.5f);
     }
 
 

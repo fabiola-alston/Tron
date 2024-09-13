@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using LinkedListNS;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 public class TailRenderScript : MonoBehaviour
 {
     public GameObject tilePrefab;
+    public GameObject car;
     public int trailLength = 3;
     private float moveX;
     private float moveY;
@@ -34,19 +38,10 @@ public class TailRenderScript : MonoBehaviour
         positions.AddFirst(playerPos);
         globalPositions.AddFirst(new Vector3());
 
-        /*for (int i = 0; i < trailLength; i++)
+        if (car == null)
         {
-            lastPlayerPos = new Vector3(lastPlayerPos.x - moveX, lastPlayerPos.y - moveY, -2f);
-            GameObject trailSquare = Instantiate(tilePrefab, lastPlayerPos, Quaternion.identity);
-            positions.AddLast(lastPlayerPos);
-            trailSquares.AddLast(trailSquare);
-
-            Debug.Log(positions.Length());
-
-            // global positions add
-            globalPositions.AddLast(lastPlayerPos);
-
-        }*/
+            car = new GameObject();
+        }
     }
 
     void Update()
@@ -83,7 +78,7 @@ public class TailRenderScript : MonoBehaviour
         
     }
 
-    void UpdateTrail()
+    private void UpdateTrail()
     {
 
         Vector3 playerPos = transform.position;
@@ -117,7 +112,7 @@ public class TailRenderScript : MonoBehaviour
 
     }
 
-    void SetDirection(float x, float y)
+    private void SetDirection(float x, float y)
     {
         moveX = x;
         moveY = y;
@@ -128,12 +123,84 @@ public class TailRenderScript : MonoBehaviour
     {
         for (int i = 0; i < tailObjects.Length() - 1; i++)
         {
-            Destroy(tailObjects.Index(i));
+            Destroy(this.tailObjects.Index(i));
         }
     }
 }
 
-public abstract class TailRenderer
+/*public class TailRenderer : MonoBehaviour 
 {
+    public int tailLength;
+    private SinglyLinkedList<Vector3> positions = new SinglyLinkedList<Vector3>();
+    public static SinglyLinkedList<Vector3> globalPositions = new SinglyLinkedList<Vector3>();
+    private SinglyLinkedList<GameObject> tailObjects = new SinglyLinkedList<GameObject>();
+    public GameObject squarePrefab;
+    private Vector3 playerPosUpdate;
 
+    // when instanced, will automatically do this for every instance
+    void Start()
+    {
+        // adds players current position
+        positions.AddFirst(transform.position); // adds to normal, private positions list
+        globalPositions.AddFirst(new Vector3()); // adds to global positions list used by all players
+
+        playerPosUpdate = transform.position;
+
+    }
+
+    // is called everytime there is a change in position
+    public void UpdateTail(float moveX, float moveY)
+    {
+        Vector3 playerPos = transform.position;
+
+        // last position player was in before the current one
+        Vector3 lastPlayerPos = new Vector3(playerPos.x - moveX, playerPos.y - moveY, playerPos.z);
+
+        // if game is starting out, 
+        if (positions.Length() < tailLength + 1)
+        {
+            Debug.Log(positions.Length());
+            positions.AddLast(lastPlayerPos);
+            globalPositions.AddLast(lastPlayerPos);
+
+            GameObject trailSquare = Instantiate(squarePrefab, playerPos, Quaternion.identity);
+            tailObjects.AddFirst(trailSquare);
+
+        }
+        else
+        {
+            positions.AddFirst(playerPos);
+            positions.RemoveLast();
+
+            // global positions
+            globalPositions.AddFirst(lastPlayerPos);
+            globalPositions.RemoveLast();
+
+            GameObject trailSquare = Instantiate(squarePrefab, playerPos, Quaternion.identity);
+            tailObjects.AddFirst(trailSquare);
+
+            Destroy(tailObjects.Index(tailLength));
+            tailObjects.RemoveLast();
+
+        }
+    }
+
+    // destroys tail entirely
+    public void DestroyTail()
+    {
+        for (int i = 0; i < tailObjects.Length() - 1; i++)
+        {
+            Destroy(tailObjects.Index(i));
+        }
+    }
+
+    public void CallOnUpdate(float moveX, float moveY)
+    {
+        if (transform.position != playerPosUpdate)
+        {
+            UpdateTail(moveX, moveY);
+            playerPosUpdate = transform.position;
+        }
+    }
 }
+*/
