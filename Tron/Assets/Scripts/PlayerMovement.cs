@@ -1,10 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
-using LinkedListNS;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -23,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
     // public speed, can be changed
     public float speed = 1f;
 
+    // gas-o-meter :)
+    public float gas;
+
     // standard amount of pixels (unity measure) that car will move
     private float unit = 0.25f; // standard is 0.25f
 
@@ -36,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     // used in global variables and in rendering tail (both are linked)
     // private SinglyLinkedList<Vector3> globalPositions;
     private TailRenderScript tailRenderer;
-    
+
 
     private void Start()
     {
@@ -88,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         // dies if car hits a grid position that is occupied by another player or itself
         for (int i = 0; i < GlobalPositionsScript.globalPositions.Length(); i++)
         {
-            if (transform.position == GlobalPositionsScript.globalPositions.Index(i))
+            if (transform.position.x == GlobalPositionsScript.globalPositions.Index(i).x && transform.position.y == GlobalPositionsScript.globalPositions.Index(i).y)
             {
                 tailRenderer.DestroyTail();
                 Death();

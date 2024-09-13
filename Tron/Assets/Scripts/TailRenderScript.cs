@@ -74,6 +74,12 @@ public class TailRenderScript : MonoBehaviour
         {
             UpdateTrail();
             playerPosUpdate = transform.position;
+            /*Debug.Log(GlobalPositionsScript.globalPositions.Length());
+
+            for (int i = 0; i < GlobalPositionsScript.globalPositions.Length(); i++)
+            {
+                Debug.Log(GlobalPositionsScript.globalPositions.Index(i));
+            }*/
         }
         
     }

@@ -15,10 +15,24 @@ public class CPUMovement : MonoBehaviour
     public float subUnitsTraveled;
     private Coroutine currentCoroutine;
     public Vector3 moveAmount;
-    // private SinglyLinkedList<Vector3> globalPositions;
+
+    public float gas;
+
+    private TailRenderScript tailRenderer;
+
+    enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
+
+    private Direction direction;
 
     void Start()
     {
+        tailRenderer = gameObject.GetComponentInChildren<TailRenderScript>();
         isMoving = true;
         subUnit = unit * speed;
 
@@ -27,6 +41,8 @@ public class CPUMovement : MonoBehaviour
         moveX = 0f;
         moveY = -subUnit;
         rotateAngle = 0f;
+
+        direction = Direction.Left;
 
         StartCoroutine(Clock());
 
@@ -53,16 +69,18 @@ public class CPUMovement : MonoBehaviour
 
         Vector3 position = transform.position;
 
-        if ((position.x + moveX >= 10 || position.x + moveX <= -10) || (position.y + moveY >= 5 || position.y + moveY <= -5))
+
+        if (((position.x + moveX >= 10 || position.x + moveX <= -10) || (position.y + moveY >= 5 || position.y + moveY <= -5)))
         {
             RandomTurn();
         }
 
         for (int i = 0; i < GlobalPositionsScript.globalPositions.Length(); i++)
         {
-            if (transform.position == GlobalPositionsScript.globalPositions.Index(i))
+            if ((position.x == GlobalPositionsScript.globalPositions.Index(i).x && position.y == GlobalPositionsScript.globalPositions.Index(i).y))
             {
                 Death();
+                return;
             }
         }
     }
@@ -72,11 +90,11 @@ public class CPUMovement : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(2f);
             RandomTurn();
-            
+            yield return new WaitForSeconds(5f);
+
         }
-        
+
     }
 
     private IEnumerator ConstantMove()
@@ -103,6 +121,8 @@ public class CPUMovement : MonoBehaviour
     private void Death()
     {
         isMoving = false;
+        tailRenderer.DestroyTail();
+        Destroy(gameObject, 0.5f);
     }
 
     private void SetDirection(float dirX, float dirY, float angle)
@@ -123,9 +143,9 @@ public class CPUMovement : MonoBehaviour
 
     private void RandomTurn()
     {
-        int randomChoice = Random.Range(0, 4);
+        int randomChoice = Random.Range(0, 2);
 
-        if (isMoving)
+        /*if (isMoving)
         {
             switch (randomChoice)
             {
@@ -146,7 +166,66 @@ public class CPUMovement : MonoBehaviour
                     break;
 
             }
+        }*/
+
+        if (isMoving)
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    if (randomChoice == 0)
+                    {
+                        SetDirection(-subUnit, 0f, 90f); // left
+                        direction = Direction.Left;
+                    }
+                    else if (randomChoice == 1)
+                    {
+                        SetDirection(subUnit, 0f, -90f); // right
+                        direction = Direction.Right;
+                    }
+                    break;
+
+                case Direction.Down:
+                    if (randomChoice == 0)
+                    {
+                        SetDirection(-subUnit, 0f, 90f); // left
+                        direction = Direction.Left;
+                    }
+                    else if (randomChoice == 1)
+                    {
+                        SetDirection(subUnit, 0f, -90f); // right
+                        direction = Direction.Right;
+                    }
+                    break;
+
+                case Direction.Left:
+                    if (randomChoice == 0)
+                    {
+                        SetDirection(0f, subUnit, 0f); // up
+                        direction = Direction.Up;
+                    }
+                    else if (randomChoice == 1)
+                    {
+                        SetDirection(0f, -subUnit, 180f); // down]
+                        direction = Direction.Down;
+                    }
+                    break;
+
+                case Direction.Right:
+                    if (randomChoice == 0)
+                    {
+                        SetDirection(0f, subUnit, 0f); // up
+                        direction = Direction.Up;
+                    }
+                    else if (randomChoice == 1)
+                    {
+                        SetDirection(0f, -subUnit, 180f); // down
+                        direction = Direction.Down;
+                    }
+                    break;
+
+            }
+
         }
-        
     }
 }
