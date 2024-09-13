@@ -1,24 +1,38 @@
-using LinkedListNS;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CPUMovement : MonoBehaviour
+public class BotMovement : MonoBehaviour
 {
     private float moveX;
     private static float moveY;
     private float rotateAngle;
     private bool isMoving;
+
     public float speed = 1f;
+
     private float unit = 0.25f; // standard is 0.25f
     private float subUnit = 0.25f; // standard at speed 1
-    public float subUnitsTraveled;
+    private float subUnitsTraveled;
     private Coroutine currentCoroutine;
-    public Vector3 moveAmount;
-    // private SinglyLinkedList<Vector3> globalPositions;
+    private Vector3 moveAmount;
+
+    private Vector3 playerPosUpdate;
+
+    private EstelaRenderer estela;
+    public GameObject squarePrefab;
+    public int tailLength = 5;
+
 
     void Start()
     {
+        estela = gameObject.AddComponent<EstelaRenderer>();
+        estela.tailLength = tailLength;
+        estela.squarePrefab = squarePrefab;
+        estela.playerPos = transform.position;
+        // estela.StartCall();
+
+
         isMoving = true;
         subUnit = unit * speed;
 
@@ -28,9 +42,11 @@ public class CPUMovement : MonoBehaviour
         moveY = -subUnit;
         rotateAngle = 0f;
 
-        StartCoroutine(Clock());
+        playerPosUpdate = transform.position;
 
+        StartCoroutine(Clock());
     }
+
 
     void Update()
     {
@@ -58,15 +74,22 @@ public class CPUMovement : MonoBehaviour
             RandomTurn();
         }
 
-        for (int i = 0; i < GlobalPositionsScript.globalPositions.Length(); i++)
+        for (int i = 0; i < EstelaRenderer.globalPositions.Length(); i++)
         {
-            if (transform.position == GlobalPositionsScript.globalPositions.Index(i))
+            if (transform.position == EstelaRenderer.globalPositions.Index(i))
             {
                 Death();
             }
         }
-    }
 
+        if (transform.position != playerPosUpdate)
+        {
+            estela.UpdateEstela(moveX, moveY);
+            // estela.CreateSquare();
+            playerPosUpdate = transform.position;
+            estela.playerPos = playerPosUpdate;
+        }
+    }
 
     private IEnumerator Clock()
     {
@@ -74,9 +97,9 @@ public class CPUMovement : MonoBehaviour
         {
             yield return new WaitForSeconds(2f);
             RandomTurn();
-            
+
         }
-        
+
     }
 
     private IEnumerator ConstantMove()
@@ -147,6 +170,7 @@ public class CPUMovement : MonoBehaviour
 
             }
         }
-        
+
     }
 }
+

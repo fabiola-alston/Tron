@@ -9,21 +9,32 @@ using LinkedListNS;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // determine direction and movement
     private float moveX;
     private static float moveY;
     private float rotateAngle;
+
+    // automatically set to true at start
     private bool isMoving;
+
+    // starts movement coroutine
     private Coroutine currentCoroutine;
-    private float unit = 0.25f; // standard is 0.25f
-    private float subUnit = 0.25f; // standard at speed 1
-    private float subUnitsTraveled;
 
-    private SinglyLinkedList<Vector3> globalPositions;
-
-
+    // public speed, can be changed
     public float speed = 1f;
+
+    // standard amount of pixels (unity measure) that car will move
+    private float unit = 0.25f; // standard is 0.25f
+
+    // used to determine speed
+    private float subUnit = 0.25f; // standard at speed 1
+
+    // useed for movement coroutine
+    private float subUnitsTraveled;
     public Vector3 moveAmount;
 
+    // used in global variables and in rendering tail (both are linked)
+    // private SinglyLinkedList<Vector3> globalPositions;
     private TailRenderScript tailRenderer;
     
 
@@ -35,13 +46,13 @@ public class PlayerMovement : MonoBehaviour
         // sets subUnits (how many units will be traveled at a certain speed amount)
         subUnit = unit * speed;
 
-        globalPositions = GlobalPositionsScript.globalPositions;
+        // globalPositions = TailRenderScript.globalPositions;
 
         moveX = 0f;
         moveY = subUnit;
         rotateAngle = 0f;
 
-        tailRenderer = gameObject.GetComponent<TailRenderScript>();
+        tailRenderer = gameObject.GetComponentInChildren<TailRenderScript>();
 
     }
 
@@ -70,14 +81,16 @@ public class PlayerMovement : MonoBehaviour
         // dies if car hits an edge
         if ((position.x >= 10 || position.x <= -10) || (position.y >= 5 || position.y <= -5))
         {
+            tailRenderer.DestroyTail();
             Death();
         }
 
-        // dies if car hits a grid position that is occupied by another player
-        for (int i = 0; i < globalPositions.Length(); i++)
+        // dies if car hits a grid position that is occupied by another player or itself
+        for (int i = 0; i < GlobalPositionsScript.globalPositions.Length(); i++)
         {
-            if (transform.position == globalPositions.Index(i))
+            if (transform.position == GlobalPositionsScript.globalPositions.Index(i))
             {
+                tailRenderer.DestroyTail();
                 Death();
             }
         }
@@ -104,21 +117,6 @@ public class PlayerMovement : MonoBehaviour
         {
             SetDirection(subUnit, 0f, -90f);
 
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            speed = 1f;
-        }
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            speed = 2f;
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            speed = 3f;
         }
 
     }
@@ -156,11 +154,6 @@ public class PlayerMovement : MonoBehaviour
         }
         
         Vector3 playerPos = transform.position;
-
-        // playerPositions.AddFirst(playerPos);
-        // playerPositions.RemoveLast();
-
-        // Debug.Log("X:" + playerPos.x + "Y: " + playerPos.y);
 
 
         currentCoroutine = null;
