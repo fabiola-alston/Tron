@@ -412,8 +412,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  gas: 0
+  gas: 500
   moveAmount: {x: 0, y: 0, z: 0}
+  tailRenderer: {fileID: 0}
 --- !u!50 &838436175
 Rigidbody2D:
   serializedVersion: 4
@@ -515,8 +516,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ffb4eecee7f2b4fa333de485118bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpPrefab: {fileID: 4491999361858854818, guid: 594142edec7d51e43863d440c8cfeb87, type: 3}
-  spawnInterval: 5
+  hyperSpeedPrefab: {fileID: 4491999361858854818, guid: 594142edec7d51e43863d440c8cfeb87, type: 3}
+  bombPrefab: {fileID: 1956582311458007765, guid: 6a2da1d1d8018f44d8bb17131c411a62, type: 3}
+  gasChargePrefab: {fileID: 7591904591003212091, guid: dfaba72affcf0e44491febc41028ec7f, type: 3}
+  growEstelaPrefab: {fileID: 1635129892751199510, guid: 70d757938b3569f489539ffeb0eab67e, type: 3}
+  shieldPrefab: {fileID: 1372156862444743370, guid: c95910a3c23b2714c935dcf7b99d6229, type: 3}
   spawnAreaMin: {x: -10, y: -5, z: -3}
   spawnAreaMax: {x: 10, y: 5, z: -3}
 --- !u!4 &853481498
@@ -593,6 +597,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: orange car
       objectReference: {fileID: 0}
+    - target: {fileID: -2253911629886400664, guid: 6d0859f5fdac34e479d93d8755375110, type: 3}
+      propertyPath: m_TagString
+      value: CPU
+      objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 6d0859f5fdac34e479d93d8755375110, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2
@@ -651,6 +659,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 6d0859f5fdac34e479d93d8755375110, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1545626497}
+    - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 6d0859f5fdac34e479d93d8755375110, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1545626499}
+    - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 6d0859f5fdac34e479d93d8755375110, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1545626498}
   m_SourcePrefab: {fileID: -8435245712485981826, guid: 6d0859f5fdac34e479d93d8755375110, type: 3}
 --- !u!1 &1295731664
 GameObject:
@@ -717,6 +731,78 @@ MonoBehaviour:
   subUnitsTraveled: 0
   moveAmount: {x: 0, y: 0, z: 0}
   gas: 0
+--- !u!50 &1545626498
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545626495}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &1545626499
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545626495}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.995}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: -0.026455028}
+    oldSize: {x: 0.9, y: 1.89}
+    newSize: {x: 0.9, y: 1.89}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.9, y: 1.8900001}
+  m_EdgeRadius: 0
 --- !u!1 &1775872393
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,9 +976,11 @@ GameObject:
   - component: {fileID: 1874207100}
   - component: {fileID: 1874207099}
   - component: {fileID: 1874207101}
+  - component: {fileID: 1874207103}
+  - component: {fileID: 1874207102}
   m_Layer: 0
   m_Name: yellow car
-  m_TagString: Untagged
+  m_TagString: CPU
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -981,6 +1069,78 @@ MonoBehaviour:
   subUnitsTraveled: 0
   moveAmount: {x: 0, y: 0, z: 0}
   gas: 0
+--- !u!50 &1874207102
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874207098}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &1874207103
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874207098}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.995}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: -0.026455028}
+    oldSize: {x: 0.9, y: 1.89}
+    newSize: {x: 0.9, y: 1.89}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.9, y: 1.8900001}
+  m_EdgeRadius: 0
 --- !u!1 &1983925896
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,9 +1152,11 @@ GameObject:
   - component: {fileID: 1983925898}
   - component: {fileID: 1983925897}
   - component: {fileID: 1983925899}
+  - component: {fileID: 1983925901}
+  - component: {fileID: 1983925900}
   m_Layer: 0
   m_Name: pink car
-  m_TagString: Untagged
+  m_TagString: CPU
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1083,6 +1245,78 @@ MonoBehaviour:
   subUnitsTraveled: 0
   moveAmount: {x: 0, y: 0, z: 0}
   gas: 0
+--- !u!50 &1983925900
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983925896}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &1983925901
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983925896}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.995}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: -0.026455028}
+    oldSize: {x: 0.9, y: 1.89}
+    newSize: {x: 0.9, y: 1.89}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.9, y: 1.8900001}
+  m_EdgeRadius: 0
 --- !u!1 &2001718557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,9 +1328,11 @@ GameObject:
   - component: {fileID: 2001718559}
   - component: {fileID: 2001718558}
   - component: {fileID: 2001718560}
+  - component: {fileID: 2001718562}
+  - component: {fileID: 2001718561}
   m_Layer: 0
   m_Name: green car
-  m_TagString: Untagged
+  m_TagString: CPU
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1185,6 +1421,78 @@ MonoBehaviour:
   subUnitsTraveled: 0
   moveAmount: {x: 0, y: 0, z: 0}
   gas: 0
+--- !u!50 &2001718561
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001718557}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &2001718562
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001718557}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.995}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: -0.026455028}
+    oldSize: {x: 0.9, y: 1.89}
+    newSize: {x: 0.9, y: 1.89}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.9, y: 1.8900001}
+  m_EdgeRadius: 0
 --- !u!1 &2065092137
 GameObject:
   m_ObjectHideFlags: 0

@@ -88,7 +88,7 @@ public class CPUMovement : MonoBehaviour
         for (int i = 0; i < GlobalPositionsScript.globalPositions.Length(); i++)
         {
             if ((position.x - unit == GlobalPositionsScript.globalPositions.Index(i).x && position.y - unit == GlobalPositionsScript.globalPositions.Index(i).y))
-            {
+            {   
                 Death();
                 return;
             }

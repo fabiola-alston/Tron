@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 1f;
 
     // gas-o-meter :)
-    public float gas;
+    public int gas = 500; 
 
     // standard amount of pixels (unity measure) that car will move
     private float unit = 0.25f; // standard is 0.25f
@@ -152,6 +152,8 @@ public class PlayerMovement : MonoBehaviour
         }
         
         Vector3 playerPos = transform.position;
+
+        gas--;
 
 
         currentCoroutine = null;
