@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     // used in global variables and in rendering tail (both are linked)
     // private SinglyLinkedList<Vector3> globalPositions;
-    private TailRenderScript tailRenderer;
+    public TailRenderScript tailRenderer;
 
 
     private void Start()

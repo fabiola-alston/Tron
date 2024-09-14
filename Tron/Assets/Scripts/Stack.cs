@@ -55,7 +55,6 @@ namespace StackNS
             else
             {
                 top = top.previous;
-                top.next.previous = null;
                 top.next = null;
             }
             

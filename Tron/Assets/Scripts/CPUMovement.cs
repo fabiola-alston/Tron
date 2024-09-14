@@ -42,7 +42,17 @@ public class CPUMovement : MonoBehaviour
         moveY = -subUnit;
         rotateAngle = 0f;
 
-        direction = Direction.Left;
+        int randomChoice = Random.Range(0, 2);
+
+        if (randomChoice == 0)
+        {
+            direction = Direction.Up;
+        }
+        else
+        {
+            direction = Direction.Left;
+        }
+        
 
         StartCoroutine(Clock());
 
@@ -77,7 +87,7 @@ public class CPUMovement : MonoBehaviour
 
         for (int i = 0; i < GlobalPositionsScript.globalPositions.Length(); i++)
         {
-            if ((position.x == GlobalPositionsScript.globalPositions.Index(i).x && position.y == GlobalPositionsScript.globalPositions.Index(i).y))
+            if ((position.x - unit == GlobalPositionsScript.globalPositions.Index(i).x && position.y - unit == GlobalPositionsScript.globalPositions.Index(i).y))
             {
                 Death();
                 return;
@@ -144,29 +154,6 @@ public class CPUMovement : MonoBehaviour
     private void RandomTurn()
     {
         int randomChoice = Random.Range(0, 2);
-
-        /*if (isMoving)
-        {
-            switch (randomChoice)
-            {
-                case 0:
-                    SetDirection(0f, subUnit, 0f);
-                    break;
-
-                case 1:
-                    SetDirection(0f, -subUnit, 180f);
-                    break;
-
-                case 2:
-                    SetDirection(-subUnit, 0f, 90f);
-                    break;
-
-                case 3:
-                    SetDirection(subUnit, 0f, -90f);
-                    break;
-
-            }
-        }*/
 
         if (isMoving)
         {
