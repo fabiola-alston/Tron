@@ -13,7 +13,7 @@ namespace QueueNS
         public DoubleNode<T> previous;
     }
 
-    public class Queue<T>
+    public class LinkedQueue<T>
     {
         private DoubleNode<T> first;
 

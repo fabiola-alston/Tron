@@ -2,6 +2,8 @@ using LinkedListNS;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QueueNS;
+using StackNS;
 
 public class CPUMovement : MonoBehaviour
 {
@@ -16,9 +18,13 @@ public class CPUMovement : MonoBehaviour
     private Coroutine currentCoroutine;
     public Vector3 moveAmount;
 
-    public float gas;
+    public int gas = 500;
 
     private TailRenderScript tailRenderer;
+
+    public LinkedQueue<int> ItemQueue;
+    public LinkedStack<int> PowerUpStack;
+
 
     enum Direction
     {
@@ -62,7 +68,7 @@ public class CPUMovement : MonoBehaviour
     {
         subUnit = unit * speed;
 
-        if (isMoving)
+        if (isMoving && gas != 0)
         {
             // Ensure we are not starting multiple coroutines
             if (currentCoroutine == null)
@@ -214,5 +220,11 @@ public class CPUMovement : MonoBehaviour
             }
 
         }
+    }
+    public IEnumerator IncreaseSpeed()
+    {
+        speed = 3;
+        yield return new WaitForSeconds(5f);
+        speed = 1;
     }
 }

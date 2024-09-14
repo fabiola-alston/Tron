@@ -25,6 +25,7 @@ public class GrowEstelaCollision : MonoBehaviour
         if (playerMovement != null)
         {
             Debug.Log(player.name + "Grow Estela Item");
+            playerMovement.tailRenderer.trailLength = 15;
         }
 
     }

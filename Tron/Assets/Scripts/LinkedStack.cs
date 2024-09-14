@@ -12,7 +12,7 @@ namespace StackNS
         public DoubleNode<T> previous;
     }
 
-    public class  Stack<T>
+    public class  LinkedStack<T>
     {
         private DoubleNode<T> first;
         private DoubleNode<T> top;

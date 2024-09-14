@@ -25,6 +25,7 @@ public class HyperspeedCollision : MonoBehaviour
         if (playerMovement != null)
         {
             Debug.Log(player.name + "Hyperspeed Power Up");
+            playerMovement.IncreaseSpeed();
         }
 
     }

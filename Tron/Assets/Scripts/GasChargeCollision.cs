@@ -25,6 +25,7 @@ public class GasChargeCollision : MonoBehaviour
         if (playerMovement != null)
         {
             Debug.Log(player.name + "Gas Charge Item");
+            playerMovement.gas = 500;
         }
 
     }

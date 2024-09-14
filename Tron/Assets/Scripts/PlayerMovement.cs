@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using QueueNS;
+using StackNS;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -35,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     // private SinglyLinkedList<Vector3> globalPositions;
     public TailRenderScript tailRenderer;
 
+    public LinkedQueue<int> ItemQueue;
+    public LinkedStack<int> PowerUpStack;
 
     private void Start()
     {
@@ -60,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         subUnit = unit * speed;
 
         // this starts the coroutine, and only starts another one once the last one is complete
-        if (isMoving)
+        if (isMoving && gas != 0)
         {
             if (currentCoroutine == null)
             {
@@ -165,6 +169,13 @@ public class PlayerMovement : MonoBehaviour
         Vector3 playerPos = transform.position;
         tailRenderer.DestroyTail();
         Destroy(gameObject, 0.5f);
+    }
+
+    public IEnumerator IncreaseSpeed()
+    {
+        speed = 3;
+        yield return new WaitForSeconds(5f);
+        speed = 1;
     }
 
 
