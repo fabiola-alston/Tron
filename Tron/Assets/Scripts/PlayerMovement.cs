@@ -37,8 +37,8 @@ public class PlayerMovement : MonoBehaviour
     // private SinglyLinkedList<Vector3> globalPositions;
     public TailRenderScript tailRenderer;
 
-    public LinkedQueue<int> ItemQueue;
-    public LinkedStack<int> PowerUpStack;
+    public LinkedQueue<string> ItemQueue;
+    public LinkedStack<string> PowerUpStack;
 
     private void Start()
     {

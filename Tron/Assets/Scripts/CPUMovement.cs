@@ -22,8 +22,8 @@ public class CPUMovement : MonoBehaviour
 
     private TailRenderScript tailRenderer;
 
-    public LinkedQueue<int> ItemQueue;
-    public LinkedStack<int> PowerUpStack;
+    public LinkedQueue<string> ItemQueue;
+    public LinkedStack<string> PowerUpStack;
 
 
     enum Direction

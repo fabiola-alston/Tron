@@ -26,6 +26,8 @@ public class GrowEstelaCollision : MonoBehaviour
         {
             Debug.Log(player.name + "Grow Estela Item");
             playerMovement.tailRenderer.trailLength = 15;
+            // adds to item queue
+            playerMovement.ItemQueue.Enqueue("GrowEstela");
         }
 
     }

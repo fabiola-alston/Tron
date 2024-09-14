@@ -26,6 +26,8 @@ public class GasChargeCollision : MonoBehaviour
         {
             Debug.Log(player.name + "Gas Charge Item");
             playerMovement.gas = 500;
+            // adds to item queue
+            playerMovement.ItemQueue.Enqueue("GasCharge");
         }
 
     }

@@ -25,6 +25,9 @@ public class ShieldCollision : MonoBehaviour
         if (playerMovement != null)
         {
             Debug.Log(player.name + "Shield Power Up");
+
+            // adds to powerup stack 
+            playerMovement.PowerUpStack.Push("Shield");
         }
 
     }

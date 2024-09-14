@@ -25,6 +25,9 @@ public class BombCollision : MonoBehaviour
         if (playerMovement != null)
         {
             Debug.Log(player.name + "Bomb Item");
+
+            // adds to item queue
+            playerMovement.ItemQueue.Enqueue("Bomb");
         }
 
     }

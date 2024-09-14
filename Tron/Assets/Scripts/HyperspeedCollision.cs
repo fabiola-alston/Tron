@@ -26,6 +26,9 @@ public class HyperspeedCollision : MonoBehaviour
         {
             Debug.Log(player.name + "Hyperspeed Power Up");
             playerMovement.IncreaseSpeed();
+
+            // adds to powerup stack 
+            playerMovement.PowerUpStack.Push("Hyperspeed");
         }
 
     }
